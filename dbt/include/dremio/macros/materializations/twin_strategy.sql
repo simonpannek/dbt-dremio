@@ -18,7 +18,7 @@ limitations under the License.*/
     {%- if twin_strategy != 'allow' -%}
       {%- set table_relation = api.Relation.create(
           identifier=generate_alias_name_impl(model.name, config.get('file', validator=validation.any[basestring]), model),
-          schema=generate_schema_name_impl(target.root_path, config.get('root_path', validator=validation.any[basestring]), model),
+          schema=generate_schema_name_impl(target.schema, config.get('schema', validator=validation.any[basestring]), model),
           database=generate_database_name_impl(target.datalake, config.get('datalake', validator=validation.any[basestring]), model),
           type='table') -%}
       {{ adapter.drop_relation(table_relation) }}
