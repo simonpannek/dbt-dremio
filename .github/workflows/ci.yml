@@ -45,7 +45,7 @@ jobs:
         test_dir: ${{ fromJson(needs.discover-tests.outputs.test_dirs) }}
     services:
       minio:
-        image: minio/minio
+        image: minio/minio:latest
         options: --network-alias minio
         ports:
           - 9000:9000
@@ -53,7 +53,6 @@ jobs:
         env:
           MINIO_ROOT_USER: ${{ env.MINIO_ROOT_USER }}
           MINIO_ROOT_PASSWORD: ${{ env.MINIO_ROOT_PASSWORD }}
-        command: server /data --console-address ":9001"
       dremio:
         image: dremio/dremio-oss
         options: --network-alias dremio
