@@ -111,7 +111,7 @@ jobs:
       - name: Upload test report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.RUN_UNIQUE_ID }}_artifact_${{ matrix.test_dir | replace('/', '_') }} 
+          name: ${{ env.RUN_UNIQUE_ID }}_artifact_$(echo ${{ matrix.test_dir }} | tr '/' '_')
           path: reports/${{ matrix.test_dir }}.txt
 
   upload-individual-test-reports:
