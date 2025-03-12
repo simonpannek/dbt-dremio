@@ -48,7 +48,7 @@ jobs:
         test_dir: ${{ fromJson(needs.discover-tests.outputs.test_dirs) }}
     services:
       minio:
-        image: minio/minio:latest
+        image: minio/minio:edge-cicd
         options: --network-alias minio
         ports:
           - 9000:9000
