@@ -108,11 +108,15 @@ jobs:
           report_file="reports/${{ matrix.test_dir }}.txt"
           pytest ${{ matrix.test_dir }} | tee $report_file
 
+      - name: Sanitize test directory name
+        id: sanitize
+        run: echo "sanitized_test_dir=$(echo ${{ matrix.test_dir }} | tr '/' '_')" >> $GITHUB_ENV
+
       - name: Upload test report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.RUN_UNIQUE_ID }}_artifact_$(echo ${{ matrix.test_dir }} | tr '/' '_')
-          path: reports/${{ matrix.test_dir }}.txt
+          name: ${{ env.RUN_UNIQUE_ID }}_artifact_${{ steps.sanitize.outputs.sanitized_test_dir }}
+          path: reports/${{ steps.sanitize.outputs.sanitized_test_dir }}.txt
 
   upload-individual-test-reports:
     name: Upload Tests Artifacts
