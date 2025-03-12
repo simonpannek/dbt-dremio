@@ -106,13 +106,12 @@ jobs:
           pip install .
 
       - name: Run tests
-        continue-on-error: true
         run: |
           mkdir -p reports
           report_file="reports/${{ matrix.test_dir }}.txt"
           pytest ${{ matrix.test_dir }} | tee $report_file
 
-      - name: Upload test report
+      - name: Upload test report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.test_dir }}-report
@@ -123,12 +122,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: run-parallel-tests
     steps:
-      - name: Download test reports
+      - name: Download all test reports
         uses: actions/download-artifact@v4
         with:
-          name: ${{ matrix.test_dir }}-report
           path: reports/
-          
+
       - name: Upload individual test reports
         uses: actions/upload-artifact@v4
         with:
