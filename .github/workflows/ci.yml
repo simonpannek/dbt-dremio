@@ -79,6 +79,7 @@ jobs:
         id: discover-tests
         run: |
           test_dirs=$(find tests/ -type f \( -name 'test_*.py' -o -name '*_test.py' \) -exec dirname {} \; | sort -u | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "test_dirs=$test_dirs"
           echo "test_dirs=$test_dirs" >> $GITHUB_OUTPUT
 
   run-parallel-tests:
