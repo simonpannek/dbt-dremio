@@ -111,7 +111,7 @@ jobs:
       - name: Upload test report as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.test_dir }}-report
+          name: all-tests-reports 
           path: reports/${{ matrix.test_dir }}.txt
 
   upload-individual-test-reports:
