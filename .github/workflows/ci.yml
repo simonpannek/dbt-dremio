@@ -101,16 +101,16 @@ jobs:
       - name: Create .env file for tests
         run: bash .github/scripts/create_env_file.sh
 
-      - name: Run tests
-        continue-on-error: true
-        run: |
-          mkdir -p reports/${{ matrix.test_dir }}
-          report_file="reports/${{ matrix.test_dir }}.txt"
-          pytest ${{ matrix.test_dir }} | tee $report_file
-
       - name: Sanitize test directory name
         id: sanitize
         run: echo "sanitized_test_dir=$(echo ${{ matrix.test_dir }} | tr '/' '_')" >> $GITHUB_ENV
+
+      - name: Run tests
+        continue-on-error: true
+        run: |
+          mkdir -p reports/
+          report_file="reports/${{ env.sanitized_test_dir }}.txt"
+          pytest ${{ matrix.test_dir }} | tee $report_file
 
       - name: Upload test report as artifact
         uses: actions/upload-artifact@v4
@@ -131,15 +131,10 @@ jobs:
         with:
           path: reports/
 
-      - name: Set Up Python Environment
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
       - name: Extract Actual Failed Tests
         run: |
           shopt -s globstar
-          grep "FAILED tests" reports/**/*.txt | awk '{print $2}' | sort > actual_failures_sorted.txt
+          grep "FAILED tests" reports/*.txt | awk '{print $2}' | sort > actual_failures_sorted.txt
 
       - name: Sort Expected Failures
         run: sort .github/expected_failures.txt > expected_failures_sorted.txt
