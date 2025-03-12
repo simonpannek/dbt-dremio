@@ -10,7 +10,7 @@ on:
 
 jobs:
   run-tests:
-    name: Setup and Run Tests
+    name: Setup Tests
     runs-on: ubuntu-latest
     env:
       RETRY_COUNT: 12 # number of retries for health checks
@@ -90,7 +90,6 @@ jobs:
     strategy:
       matrix:
         test_dir: ${{ fromJson(needs.run-tests.outputs.test_dirs) }}
-    continue-on-error: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -132,7 +131,7 @@ jobs:
       - name: Upload individual test reports
         uses: actions/upload-artifact@v4
         with:
-          name: all-tests-reports
+          name: individual-test-reports 
           path: reports/*.txt
 
   verify-failures:
