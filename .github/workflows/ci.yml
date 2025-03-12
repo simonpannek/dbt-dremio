@@ -78,8 +78,8 @@ jobs:
       - name: Discover Test Directories
         id: discover-tests
         run: |
-          test_dirs=$(find tests/ -type f \( -name 'test_*.py' -o -name '*_test.py' \) -exec dirname {} \; | sort -u | jq -R -s -c 'split("\n")[:-1]')
-          echo "::set-output name=test_dirs::$test_dirs"
+          test_dirs=$(find tests/ -type f \( -name 'test_*.py' -o -name '*_test.py' \) -exec dirname {} \; | sort -u)
+          echo "test_dirs=$test_dirs" >> $GITHUB_OUTPUT
 
   run-parallel-tests:
     name: Run Parallel Tests
@@ -87,7 +87,7 @@ jobs:
     needs: run-tests
     strategy:
       matrix:
-        test_dir: ${{ fromJson(needs.run-tests.outputs.test_dirs) }}
+        test_dir: ${{ fromJson(steps.run-tests.test_dirs) }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
