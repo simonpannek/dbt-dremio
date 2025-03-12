@@ -90,6 +90,7 @@ jobs:
     strategy:
       matrix:
         test_dir: ${{ fromJson(needs.run-tests.outputs.test_dirs) }}
+    continue-on-error: true
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -131,7 +132,7 @@ jobs:
       - name: Upload individual test reports
         uses: actions/upload-artifact@v4
         with:
-          name: individual-test-reports
+          name: all-tests-reports
           path: reports/*.txt
 
   verify-failures:
