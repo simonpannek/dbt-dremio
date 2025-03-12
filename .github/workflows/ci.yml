@@ -108,7 +108,7 @@ jobs:
       - name: Run tests
         continue-on-error: true
         run: |
-          mkdir -p reports/
+          mkdir reports/
           report_file="reports/${{ env.sanitized_test_dir }}.txt"
           pytest ${{ matrix.test_dir }} | tee $report_file
 
