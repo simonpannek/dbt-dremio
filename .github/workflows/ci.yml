@@ -82,7 +82,7 @@ jobs:
           echo "test_dirs=$test_dirs" >> $GITHUB_OUTPUT
       - name: Print GitHub output
         id: print-github-output
-        run: cat $GITHUB_OUTPUT
+        run: echo $GITHUB_OUTPUT
 
   run-parallel-tests:
     name: Run Parallel Tests
