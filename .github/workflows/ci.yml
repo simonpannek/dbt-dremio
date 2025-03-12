@@ -116,7 +116,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.RUN_UNIQUE_ID }}_artifact_${{ steps.sanitize.outputs.sanitized_test_dir }}
-          path: reports/${{ steps.sanitize.outputs.sanitized_test_dir }}.txt
+          path: reports/
 
   upload-individual-test-reports:
     name: Upload Tests Artifacts
