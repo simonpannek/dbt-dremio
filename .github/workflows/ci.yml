@@ -129,7 +129,6 @@ jobs:
       - name: Download All Test Reports
         uses: actions/download-artifact@v4
         with:
-          name: all-tests-reports
           path: reports/
 
       - name: Set Up Python Environment
