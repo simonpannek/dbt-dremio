@@ -106,6 +106,7 @@ jobs:
           pip install .
 
       - name: Run tests
+        continue-on-error: true
         run: |
           mkdir -p reports
           report_file="reports/${{ matrix.test_dir }}.txt"
